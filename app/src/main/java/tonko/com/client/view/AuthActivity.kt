@@ -29,7 +29,7 @@ class AuthActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
-        if (intent.data == null || intent.getBooleanExtra("QUIT", true)) {
+        if (intent.data == null) {
             openWebsite()
         }
 

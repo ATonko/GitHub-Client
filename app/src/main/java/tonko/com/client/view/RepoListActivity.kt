@@ -50,10 +50,6 @@ class RepoListActivity : AppCompatActivity(), RepoListener {
             }
 
         })
-        btnQuit.setOnClickListener {
-            val intent = Intent(this@RepoListActivity, AuthActivity::class.java)
-            intent.putExtra("QUIT", true)
-        }
 
     }
 }
