@@ -4,6 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_repo_list.*
@@ -35,7 +36,7 @@ class RepoListActivity : AppCompatActivity(), RepoListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_repo_list)
 
-        rv.layoutManager = GridLayoutManager(this, 2)
+        rv.layoutManager = LinearLayoutManager(this)
         presenter.getList("ATonko").enqueue(object : Callback<ArrayList<Repos>> {
             override fun onFailure(call: Call<ArrayList<Repos>>?, t: Throwable?) {
                 Toast.makeText(this@RepoListActivity, "Проблемы с интернетом", Toast.LENGTH_LONG).show()

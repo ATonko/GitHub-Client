@@ -3,9 +3,7 @@ package tonko.com.client.adapters
 import android.support.v7.widget.RecyclerView
 import android.view.View
 
-/**
- * Created by Tonko on 23.04.2018.
- */
+
 class RepoViewHolder(itemView: View,
                      var listener: RepoListener) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
     init {

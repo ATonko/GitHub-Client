@@ -1,8 +1,6 @@
 package tonko.com.client.adapters
 
-import android.net.Uri
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_repo.view.*
@@ -31,10 +29,8 @@ class RepoListAdapter(var list: ArrayList<Repos>,
 
     override fun onBindViewHolder(holder: RepoViewHolder?, position: Int) {
         holder!!.itemView.tvTitle.text = list[position].name
-        holder.itemView.ivAvatar.setImageURI(Uri.parse(list[position].author!!.avatar_uri))
-        holder.itemView.tvAuthor.text = list[position].author!!.login
-        holder.itemView.tvForks.text = "Forks: ${list[position].forks}"
-        holder.itemView.tvWatchers.text = "Watchers: ${list[position].watchers}"
+        holder.itemView.tvForks.text = list[position].forks.toString()
+        holder.itemView.tvWatchers.text = list[position].watchers.toString()
         holder.itemView.tvDescription.text = list[position].description
     }
 }
