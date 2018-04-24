@@ -3,4 +3,14 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="grey">#D4D4D3</color>
+    <color name="title_color">#531FE0</color>
+    <color name="others_color">#7D7D7D</color>
+
+    <color name="Kotlin">#FDC312</color>
+    <color name="Java">#A37D0A</color>
+    <color name="Python">#0A1DA3</color>
+    <color name="JavaScript">#FFE933</color>
+    <color name="Ruby">#A0100D</color>
+    <color name="C">#4F4F4F</color>
 </resources>

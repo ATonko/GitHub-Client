@@ -12,4 +12,17 @@
 
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="OthersTextViewStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:textColor">@color/others_color</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="OthersTextViewStyleWithIcons" parent="OthersTextViewStyle">
+        <item name="android:layout_marginStart">25dp</item>
+        <item name="android:drawablePadding">10dp</item>
+    </style>
+
 </resources>
