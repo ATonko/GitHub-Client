@@ -31,7 +31,8 @@ class RepoListActivity : AppCompatActivity(), RepoListener, RepoListView {
     override fun isSuccess(repos: ArrayList<Repos>) {
         rv.visibility = View.VISIBLE
         llError.visibility = View.GONE
-        rv.adapter = RepoListAdapter(repos, this)
+        list = repos
+        rv.adapter = RepoListAdapter(list, this)
     }
 
     override fun isError() {

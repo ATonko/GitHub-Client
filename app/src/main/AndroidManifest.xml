@@ -21,9 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".view.RepoListActivity"
-            android:noHistory="true" />
+        <activity android:name=".view.RepoListActivity" />
         <activity android:name=".view.RepoActivity" />
         <activity
             android:name=".view.AuthActivity"
