@@ -56,4 +56,7 @@ class RepoListActivity : AppCompatActivity(), RepoListener, RepoListView {
             presenter.getList(intent.getStringExtra(LOGIN))
         }
     }
+
+    override fun onBackPressed() {
+    }
 }
