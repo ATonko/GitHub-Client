@@ -2,21 +2,18 @@ package tonko.com.client.view
 
 import android.content.Intent
 import android.net.Uri
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.webkit.WebChromeClient
-import android.webkit.WebViewClient
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_auth.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import tonko.com.client.AVATAR_URL
+import tonko.com.client.LOGIN
 import tonko.com.client.R
-import tonko.com.client.model.AccessToken
+import tonko.com.client.iview.AuthView
 import tonko.com.client.presenters.AuthPresenter
 
-class AuthActivity : AppCompatActivity() {
+class AuthActivity : AppCompatActivity(), AuthView {
 
     private val clientId = "48e9432ab493b921da94"
     private val clientSecret = "e76843019ec43ad24161f0be281df501d499631c"
@@ -29,24 +26,70 @@ class AuthActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
-        if (intent.data == null) {
+        Log.i("MyTag", "onCreate")
+        presenter.attachView(this)
+        btnOAuth.setOnClickListener {
             openWebsite()
         }
+        btnBasicAuth.setOnClickListener {
+            presenter.basicLogin(
+                    etLogin.text.toString(),
+                    etPassword.text.toString())
+        }
+    }
+
+    override fun isSuccess(accessToken: String) {
+        val intent = Intent(this, RepoListActivity::class.java)
+        intent.putExtra(TOKEN, accessToken)
+        startActivity(intent)
 
     }
+
+    override fun isSuccess(login: String, avatar_url: String) {
+        val intent = Intent(this, RepoListActivity::class.java)
+        intent.putExtra(LOGIN, login)
+        intent.putExtra(AVATAR_URL, avatar_url)
+        startActivity(intent)
+    }
+
+    override fun isError() {
+        Toast.makeText(this, resources.getString(R.string.network_error), Toast.LENGTH_LONG).show()
+    }
+
 
     override fun onResume() {
         super.onResume()
+        Log.i("MyTag", "onResume")
         val uri = intent.data
-        if (uri == null) {
-
-        } else {
+        if (uri != null && uri.toString().startsWith(redirectUri)) {
+            Log.i("MyTag", "start of working with uri")
             workingWithToken(uri)
         }
-
     }
 
+    override fun onStart() {
+        super.onStart()
+        Log.i("MyTag", "onStart")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.i("MyTag", "onRestart")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.i("MyTag", "onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.i("MyTag", "onStop")
+    }
+
+
     fun openWebsite() {
+        Log.i("MyTag", "openwebsite")
         val intent = Intent(Intent.ACTION_VIEW,
                 Uri.parse("https://github.com/login/oauth/authorize" +
                         "?client_id=$clientId" + "&scope=repo" +
@@ -56,23 +99,7 @@ class AuthActivity : AppCompatActivity() {
 
     fun workingWithToken(uri: Uri) {
         val code = uri.getQueryParameter("code")
-        val accessToken = presenter.login(clientId, clientSecret, code)
-
-        accessToken.enqueue(object : Callback<AccessToken> {
-            override fun onFailure(call: Call<AccessToken>?, t: Throwable?) {
-                Toast.makeText(this@AuthActivity, "Проблемы с интернетом", Toast.LENGTH_LONG).show()
-            }
-
-            override fun onResponse(call: Call<AccessToken>?, response: Response<AccessToken>?) {
-                if (response!!.isSuccessful) {
-                    val intent = Intent(this@AuthActivity, RepoListActivity::class.java)
-                    token = response.body()!!.accessToken
-                    intent.putExtra(TOKEN, token)
-                    Log.i("MyTag", "token = ${response.body()!!.accessToken}")
-                    startActivity(intent)
-                }
-            }
-        })
+        presenter.loginOAuth(clientId, clientSecret, code)
 
     }
 }
