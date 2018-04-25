@@ -1,12 +1,17 @@
 package tonko.com.client.view
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
+import kotlinx.android.synthetic.main.activity_auth.*
 import kotlinx.android.synthetic.main.activity_repo_list.*
 import tonko.com.client.LOGIN
+import tonko.com.client.PASSWORD
 import tonko.com.client.R
 import tonko.com.client.adapters.RepoListAdapter
 import tonko.com.client.adapters.RepoListener
@@ -20,6 +25,7 @@ class RepoListActivity : AppCompatActivity(), RepoListener, RepoListView {
 
     private val presenter = RepoListPresenter()
     private var list = ArrayList<Repos>()
+    private lateinit var sPref: SharedPreferences
 
     override fun onClick(position: Int) {
         val intent = Intent(this, RepoActivity::class.java)
@@ -44,17 +50,26 @@ class RepoListActivity : AppCompatActivity(), RepoListener, RepoListView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_repo_list)
         presenter.attachView(this)
-
+        sPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         btnReload.setOnClickListener {
             if (intent.getStringExtra(LOGIN) != null) {
                 presenter.getList(intent.getStringExtra(LOGIN))
             }
         }
+        btnQuit.setOnClickListener {
+            val editor = sPref.edit()
+            editor.putString(LOGIN, "")
+            editor.putString(PASSWORD, "")
+            editor.apply()
+            startActivity(Intent(this, AuthActivity::class.java))
+        }
 
         rv.layoutManager = LinearLayoutManager(this)
-
         if (intent.getStringExtra(LOGIN) != null) {
             presenter.getList(intent.getStringExtra(LOGIN))
+        }
+        if (sPref.getString(LOGIN, "").isNotEmpty()) {
+            presenter.getList(sPref.getString(LOGIN, ""))
         }
     }
 

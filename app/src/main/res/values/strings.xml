@@ -4,10 +4,15 @@
     <string name="auth_password">Password</string>
     <string name="title_activity_web_view">WebViewActivity</string>
     <string name="network_error">Ошибка с сетью. Попробуйте еще раз</string>
+    <string name="auth_error">Неправильный логин или пароль</string>
     <string name="reload">перезагрузить</string>
     <string name="basic_auth">войти</string>
     <string name="oauth">Войти через GitHub</string>
     <string name="octocat_desc">octocat</string>
     <string name="login">Логин</string>
     <string name="password">Пароль</string>
+
+    <string name="account_type">client</string>
+    <string name="quit">Выйти из аккаунта</string>
+
 </resources>

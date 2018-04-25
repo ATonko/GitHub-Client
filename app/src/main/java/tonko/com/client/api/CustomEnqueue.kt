@@ -3,7 +3,6 @@ package tonko.com.client.api
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import tonko.com.client.model.Owner
 
 
 open class CustomEnqueue<T> {
@@ -19,4 +18,6 @@ open class CustomEnqueue<T> {
             }
         })
     }
+
+
 }

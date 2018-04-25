@@ -1,15 +1,15 @@
 package tonko.com.client.view
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_auth.*
-import tonko.com.client.AVATAR_URL
-import tonko.com.client.LOGIN
-import tonko.com.client.R
+import tonko.com.client.*
 import tonko.com.client.iview.AuthView
 import tonko.com.client.presenters.AuthPresenter
 
@@ -19,9 +19,8 @@ class AuthActivity : AppCompatActivity(), AuthView {
     private val clientSecret = "e76843019ec43ad24161f0be281df501d499631c"
     private val redirectUri = "tonko://callback"
     private var TOKEN = "THE_TOKEN"
-    val URI_EXTRA: String = "URI1_EXTRA"
+    private lateinit var sPref: SharedPreferences
     private val presenter = AuthPresenter()
-    private lateinit var token: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,50 +45,34 @@ class AuthActivity : AppCompatActivity(), AuthView {
     }
 
     override fun isSuccess(login: String, avatar_url: String) {
+        sPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        val editor = sPref.edit()
+        editor.putString(LOGIN, login)
+        editor.putString(PASSWORD, etPassword.text.toString())
+        editor.apply()
         val intent = Intent(this, RepoListActivity::class.java)
         intent.putExtra(LOGIN, login)
         intent.putExtra(AVATAR_URL, avatar_url)
         startActivity(intent)
     }
 
-    override fun isError() {
-        Toast.makeText(this, resources.getString(R.string.network_error), Toast.LENGTH_LONG).show()
+    override fun isError(code: String) {
+        when (code) {
+            AUTH_PROBLEM -> Toast.makeText(this, resources.getString(R.string.auth_error), Toast.LENGTH_LONG).show()
+            NET_PROBLEM -> Toast.makeText(this, resources.getString(R.string.network_error), Toast.LENGTH_LONG).show()
+        }
     }
 
 
     override fun onResume() {
         super.onResume()
-        Log.i("MyTag", "onResume")
         val uri = intent.data
         if (uri != null && uri.toString().startsWith(redirectUri)) {
-            Log.i("MyTag", "start of working with uri")
             workingWithToken(uri)
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.i("MyTag", "onStart")
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        Log.i("MyTag", "onRestart")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.i("MyTag", "onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.i("MyTag", "onStop")
-    }
-
-
     fun openWebsite() {
-        Log.i("MyTag", "openwebsite")
         val intent = Intent(Intent.ACTION_VIEW,
                 Uri.parse("https://github.com/login/oauth/authorize" +
                         "?client_id=$clientId" + "&scope=repo" +
