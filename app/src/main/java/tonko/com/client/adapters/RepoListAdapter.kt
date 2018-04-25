@@ -29,6 +29,7 @@ class RepoListAdapter(var list: ArrayList<Repos>,
 
     override fun onBindViewHolder(holder: RepoViewHolder?, position: Int) {
         holder!!.itemView.tvTitle.text = list[position].name
+        holder.itemView.tvLanguage.text = list[position].language
         holder.itemView.tvForks.text = list[position].forks.toString()
         holder.itemView.tvWatchers.text = list[position].watchers.toString()
         holder.itemView.tvDescription.text = list[position].description

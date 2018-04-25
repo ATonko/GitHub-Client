@@ -19,5 +19,8 @@ class Repos {
     @SerializedName("forks")
     var forks: Int = 0
 
+    @SerializedName("language")
+    var language: String = ""
+
 
 }

@@ -34,7 +34,6 @@
         android:id="@+id/tvLanguage"
         style="@style/OthersTextViewStyleWithIcons"
         android:layout_marginStart="0dp"
-        android:drawableStart="@drawable/circle"
         android:text="language"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
