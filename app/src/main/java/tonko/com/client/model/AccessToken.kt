@@ -2,10 +2,7 @@ package tonko.com.client.model
 
 import com.google.gson.annotations.SerializedName
 
-/**
- * Created by Tonko on 22.04.2018.
- */
-class AccessToken {
+class AccessToken : BaseModel() {
     @SerializedName("access_token")
     var accessToken: String=""
 

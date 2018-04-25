@@ -4,13 +4,13 @@ import retrofit2.Call
 import retrofit2.http.*
 import tonko.com.client.model.AccessToken
 import tonko.com.client.model.Commits
+import tonko.com.client.model.Owner
 import tonko.com.client.model.Repos
 
 
 interface PublicApi {
 
     @Headers("Accept: application/json")
-
     @FormUrlEncoded
     @POST("login/oauth/access_token")
     fun getAccessToken(
@@ -18,6 +18,11 @@ interface PublicApi {
             @Field("client_secret") clientSecret: String,
             @Field("code") code: String
     ): Call<AccessToken>
+
+    @GET("user")
+    fun getBasicAuth(
+            @Header("Authorization") authHeader: String
+    ): Call<Owner>
 
     //@Headers("Authorization: token")
     @GET("users/{user}/repos")

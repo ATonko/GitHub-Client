@@ -13,6 +13,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
             android:name=".view.SplashActivity"
+            android:noHistory="true"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,9 +21,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.RepoListActivity" />
+        <activity
+            android:name=".view.RepoListActivity"
+            android:noHistory="true" />
         <activity android:name=".view.RepoActivity" />
-        <activity android:name=".view.AuthActivity">
+        <activity
+            android:name=".view.AuthActivity"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -34,10 +39,7 @@
                     android:scheme="tonko" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".view.WebViewActivity"
-            android:label="@string/title_activity_web_view"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+
     </application>
 
 </manifest>
