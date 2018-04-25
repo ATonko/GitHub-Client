@@ -3,34 +3,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
+    android:paddingEnd="30dp"
+    android:paddingStart="30dp"
+    android:paddingTop="50dp"
     tools:context="tonko.com.client.view.AuthActivity">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="30dp"
+        android:contentDescription="@string/octocat_desc"
+        android:src="@drawable/octocat" />
 
     <EditText
         android:id="@+id/etLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Login"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        android:hint="@string/login"
         android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/etPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        android:hint="@string/password"
         android:inputType="textPassword" />
 
     <Button
         android:id="@+id/btnBasicAuth"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Basic auth" />
+        android:text="@string/basic_auth" />
 
     <Button
         android:id="@+id/btnOAuth"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="OAuth" />
+        android:text="@string/oauth" />
 
 
 </LinearLayout>
