@@ -24,10 +24,14 @@ interface PublicApi {
             @Header("Authorization") authHeader: String
     ): Call<Owner>
 
-    //@Headers("Authorization: token")
     @GET("users/{user}/repos")
     fun getRepoList(
             @Path("user") user: String
+    ): Call<ArrayList<Repos>>
+
+    @GET("user")
+    fun getRepoListWithToken(
+            @Header("Authorization") token: String
     ): Call<ArrayList<Repos>>
 
     @GET("repos/{user}/{project}/commits")

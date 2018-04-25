@@ -39,7 +39,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
 
     override fun isSuccess(accessToken: String) {
         val intent = Intent(this, RepoListActivity::class.java)
-        intent.putExtra(TOKEN, accessToken)
+        intent.putExtra(LOGIN, accessToken)
         startActivity(intent)
 
     }

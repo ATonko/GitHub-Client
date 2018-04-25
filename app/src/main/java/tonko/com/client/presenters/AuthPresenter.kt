@@ -1,6 +1,7 @@
 package tonko.com.client.presenters
 
 import android.util.Base64
+import android.util.Log
 import tonko.com.client.AUTH_PROBLEM
 import tonko.com.client.NET_PROBLEM
 import tonko.com.client.api.ApiHolder
@@ -26,7 +27,23 @@ class AuthPresenter : BasePresenter<AuthView>() {
         customForAccessToken.customEnqueue(response, {
             view?.isError(NET_PROBLEM)
         }, {
-            view?.isSuccess(it.body()!!.accessToken)
+            getListWithToken(it.body()!!.accessToken)
+        })
+    }
+
+    fun getListWithToken(token: String) {
+        Log.i("MyTag", "presenter token is $token")
+        val response = privateApi.getBasicAuth(
+                "Bearer $token")
+        customForOwner.customEnqueue(response,
+                {
+                    view?.isError(AUTH_PROBLEM)
+                }, {
+            if (it.isSuccessful) {
+                view?.isSuccess(it.body()!!.login)
+            } else {
+                view?.isError(NET_PROBLEM)
+            }
         })
     }
 
@@ -39,6 +56,7 @@ class AuthPresenter : BasePresenter<AuthView>() {
                         Base64.encodeToString(
                                 "$login:$password".toByteArray(),
                                 Base64.NO_WRAP))
+
         customForOwner.customEnqueue(response, {
             view?.isError(NET_PROBLEM)
         }, {

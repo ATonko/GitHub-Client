@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_repo_list.*
 import tonko.com.client.LOGIN
 import tonko.com.client.PASSWORD
 import tonko.com.client.R
+import tonko.com.client.TOKEN
 import tonko.com.client.adapters.RepoListAdapter
 import tonko.com.client.adapters.RepoListener
 import tonko.com.client.iview.RepoListView
@@ -71,6 +72,8 @@ class RepoListActivity : AppCompatActivity(), RepoListener, RepoListView {
         if (sPref.getString(LOGIN, "").isNotEmpty()) {
             presenter.getList(sPref.getString(LOGIN, ""))
         }
+
+
     }
 
     override fun onBackPressed() {
