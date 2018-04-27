@@ -3,11 +3,14 @@ package tonko.com.client.view
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_auth.*
 import kotlinx.android.synthetic.main.activity_repo_list.*
 import tonko.com.client.LOGIN
@@ -27,6 +30,7 @@ class RepoListActivity : AppCompatActivity(), RepoListener, RepoListView {
     private val presenter = RepoListPresenter()
     private var list = ArrayList<Repos>()
     private lateinit var sPref: SharedPreferences
+    private lateinit var avatar_url: String
 
     override fun onClick(position: Int) {
         val intent = Intent(this, RepoActivity::class.java)
@@ -37,13 +41,21 @@ class RepoListActivity : AppCompatActivity(), RepoListener, RepoListView {
 
     override fun isSuccess(repos: ArrayList<Repos>) {
         rv.visibility = View.VISIBLE
+        llNameWithAvatar.visibility = View.VISIBLE
         llError.visibility = View.GONE
+
+        Glide
+                .with(this)
+                .load(repos[0].author!!.avatar_uri)
+                .into(ivAvatar)
+        tvAuthorName.text = repos[0].author!!.login
         list = repos
         rv.adapter = RepoListAdapter(list, this)
     }
 
     override fun isError() {
         rv.visibility = View.GONE
+        llNameWithAvatar.visibility = View.GONE
         llError.visibility = View.VISIBLE
     }
 
