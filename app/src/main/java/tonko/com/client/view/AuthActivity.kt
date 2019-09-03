@@ -13,7 +13,8 @@ import tonko.com.client.*
 import tonko.com.client.iview.AuthView
 import tonko.com.client.presenters.AuthPresenter
 
-class AuthActivity : AppCompatActivity(), AuthView {
+class AuthActivity : AppCompatActivity(), AuthView
+{
 
     private val clientId = "48e9432ab493b921da94"
     private val clientSecret = "e76843019ec43ad24161f0be281df501d499631c"
@@ -22,10 +23,11 @@ class AuthActivity : AppCompatActivity(), AuthView {
     private lateinit var sPref: SharedPreferences
     private val presenter = AuthPresenter()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
-        Log.i("MyTag", "onCreate")
+
         presenter.attachView(this)
         btnOAuth.setOnClickListener {
             openWebsite()
@@ -37,14 +39,16 @@ class AuthActivity : AppCompatActivity(), AuthView {
         }
     }
 
-    override fun isSuccess(accessToken: String) {
+    override fun isSuccess(accessToken: String)
+    {
         val intent = Intent(this, RepoListActivity::class.java)
         intent.putExtra(LOGIN, accessToken)
         startActivity(intent)
 
     }
 
-    override fun isSuccess(login: String, avatar_url: String) {
+    override fun isSuccess(login: String, avatar_url: String)
+    {
         sPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         val editor = sPref.edit()
         editor.putString(LOGIN, login)
@@ -56,23 +60,29 @@ class AuthActivity : AppCompatActivity(), AuthView {
         startActivity(intent)
     }
 
-    override fun isError(code: String) {
-        when (code) {
+    override fun isError(code: String)
+    {
+        when (code)
+        {
             AUTH_PROBLEM -> Toast.makeText(this, resources.getString(R.string.auth_error), Toast.LENGTH_LONG).show()
             NET_PROBLEM -> Toast.makeText(this, resources.getString(R.string.network_error), Toast.LENGTH_LONG).show()
         }
     }
 
 
-    override fun onResume() {
+    override fun onResume()
+    {
         super.onResume()
+        //todo че тут делается
         val uri = intent.data
-        if (uri != null && uri.toString().startsWith(redirectUri)) {
+        if (uri != null && uri.toString().startsWith(redirectUri))
+        {
             workingWithToken(uri)
         }
     }
 
-    fun openWebsite() {
+    private fun openWebsite()
+    {
         val intent = Intent(Intent.ACTION_VIEW,
                 Uri.parse("https://github.com/login/oauth/authorize" +
                         "?client_id=$clientId" + "&scope=repo" +
@@ -80,9 +90,16 @@ class AuthActivity : AppCompatActivity(), AuthView {
         startActivity(intent)
     }
 
-    fun workingWithToken(uri: Uri) {
+    private fun workingWithToken(uri: Uri)
+    {
         val code = uri.getQueryParameter("code")
         presenter.loginOAuth(clientId, clientSecret, code)
 
+    }
+
+    override fun onDestroy()
+    {
+        super.onDestroy()
+        presenter.detachView()
     }
 }

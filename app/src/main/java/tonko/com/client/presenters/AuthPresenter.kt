@@ -9,17 +9,18 @@ import tonko.com.client.api.CustomEnqueue
 import tonko.com.client.iview.AuthView
 import tonko.com.client.model.AccessToken
 import tonko.com.client.model.Owner
+import tonko.com.client.presenters.interfaces.IAuthPresenter
 
-class AuthPresenter : BasePresenter<AuthView>() {
+class AuthPresenter : BasePresenter<AuthView>(),IAuthPresenter{
 
     private val publicApi = ApiHolder.publicApi
     private val privateApi = ApiHolder.privateApi
     private val customForOwner = CustomEnqueue<Owner>()
     private val customForAccessToken = CustomEnqueue<AccessToken>()
 
-    fun loginOAuth(clientId: String,
-                   clientSecret: String,
-                   code: String) {
+    override fun loginOAuth(clientId: String,
+                            clientSecret: String,
+                            code: String) {
         val response = publicApi.getAccessToken(
                 clientId,
                 clientSecret,
@@ -31,8 +32,8 @@ class AuthPresenter : BasePresenter<AuthView>() {
         })
     }
 
-    fun getListWithToken(token: String) {
-        Log.i("MyTag", "presenter token is $token")
+    private fun getListWithToken(token: String) {
+
         val response = privateApi.getBasicAuth(
                 "Bearer $token")
         customForOwner.customEnqueue(response,
@@ -47,7 +48,7 @@ class AuthPresenter : BasePresenter<AuthView>() {
         })
     }
 
-    fun basicLogin(
+    override fun basicLogin(
             login: String,
             password: String
     ) {
