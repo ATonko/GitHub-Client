@@ -25,6 +25,6 @@ class SplashActivity : Activity() {
             } else {
                 startActivity(Intent(this, AuthActivity::class.java))
             }
-        }, 5000)
+        }, 1500)
     }
 }
