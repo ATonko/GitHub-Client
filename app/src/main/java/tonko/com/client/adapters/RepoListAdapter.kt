@@ -12,10 +12,10 @@ import tonko.com.client.model.Repos
 class RepoListAdapter(var list: ArrayList<Repos>,
                       var listener: RepoListener) : RecyclerView.Adapter<RepoViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RepoViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepoViewHolder {
         return RepoViewHolder(
                 LayoutInflater
-                        .from(parent!!.context)
+                        .from(parent.context)
                         .inflate(
                                 R.layout.item_repo,
                                 parent,
@@ -28,12 +28,7 @@ class RepoListAdapter(var list: ArrayList<Repos>,
         return list.size
     }
 
-    override fun onBindViewHolder(holder: RepoViewHolder?, position: Int) {
-        holder!!.itemView.tvTitle.text = list[position].name
-
-        holder.itemView.tvLanguage.text = list[position].language
-        holder.itemView.tvForks.text = list[position].forks.toString()
-        holder.itemView.tvWatchers.text = list[position].watchers.toString()
-        holder.itemView.tvDescription.text = list[position].description
+    override fun onBindViewHolder(holder: RepoViewHolder, position: Int) {
+        holder.bind(list[position])
     }
 }
