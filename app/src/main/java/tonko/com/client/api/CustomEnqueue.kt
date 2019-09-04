@@ -7,7 +7,10 @@ import retrofit2.Response
 
 open class CustomEnqueue<T> {
 
-    fun customEnqueue(call: Call<T>, fail: () -> Unit = {}, success: (Response<T>) -> Unit = {}) {
+    fun customEnqueue(
+            call: Call<T>,
+            fail: () -> Unit = {},
+            success: (Response<T>) -> Unit = {}) {
         call.enqueue(object : Callback<T> {
             override fun onFailure(call: Call<T>?, t: Throwable?) {
                 fail()

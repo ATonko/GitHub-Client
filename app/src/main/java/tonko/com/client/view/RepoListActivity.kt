@@ -30,7 +30,6 @@ class RepoListActivity : AppCompatActivity(), RepoListener, RepoListView {
     private val presenter = RepoListPresenter()
     private var list = ArrayList<Repos>()
     private lateinit var sPref: SharedPreferences
-    private lateinit var avatar_url: String
 
     override fun onClick(position: Int) {
         val intent = Intent(this, RepoActivity::class.java)
@@ -46,9 +45,9 @@ class RepoListActivity : AppCompatActivity(), RepoListener, RepoListView {
 
         Glide
                 .with(this)
-                .load(repos[0].author!!.avatar_uri)
+                .load(repos[0].author?.avatar_uri)
                 .into(ivAvatar)
-        tvAuthorName.text = repos[0].author!!.login
+        tvAuthorName.text = repos[0].author?.login
         list = repos
         rv.adapter = RepoListAdapter(list, this)
     }
@@ -62,6 +61,7 @@ class RepoListActivity : AppCompatActivity(), RepoListener, RepoListView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_repo_list)
+
         presenter.attachView(this)
         sPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         btnReload.setOnClickListener {
@@ -78,16 +78,25 @@ class RepoListActivity : AppCompatActivity(), RepoListener, RepoListView {
         }
 
         rv.layoutManager = LinearLayoutManager(this)
+
+        //todo чево каво
         if (intent.getStringExtra(LOGIN) != null) {
             presenter.getList(intent.getStringExtra(LOGIN))
         }
-        if (sPref.getString(LOGIN, "").isNotEmpty()) {
+        /*if (sPref.getString(LOGIN, "")!=null) {
             presenter.getList(sPref.getString(LOGIN, ""))
+        }
+        */
+        sPref.getString(LOGIN,"")?.let {
+            if(it.isNotEmpty()) presenter.getList(it)
         }
 
 
     }
 
-    override fun onBackPressed() {
+    override fun onDestroy()
+    {
+        super.onDestroy()
+        presenter.detachView()
     }
 }

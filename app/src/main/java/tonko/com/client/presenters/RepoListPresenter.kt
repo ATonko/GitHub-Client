@@ -5,21 +5,28 @@ import tonko.com.client.api.ApiHolder
 import tonko.com.client.api.CustomEnqueue
 import tonko.com.client.iview.RepoListView
 import tonko.com.client.model.Repos
+import tonko.com.client.presenters.interfaces.IRepoListPresenter
 
-class RepoListPresenter : BasePresenter<RepoListView>() {
+class RepoListPresenter : BasePresenter<RepoListView>(), IRepoListPresenter
+{
 
     private val privateApi = ApiHolder.privateApi
     private val custom = CustomEnqueue<ArrayList<Repos>>()
 
-    fun getList(token: String) {
-        Log.i("MyTag", "presenter token is $token")
-        val response = privateApi.getRepoList(token)
+    override fun getList(login: String)
+    {
+
+        val response = privateApi.getRepoList(login)
         custom.customEnqueue(response,
                 {
                     view?.isError()
                 }, {
-            if (it.isSuccessful) {
+            if (it.isSuccessful)
+            {
                 view?.isSuccess(it.body()!!)
+            } else
+            {
+                view?.isError()
             }
         })
     }
