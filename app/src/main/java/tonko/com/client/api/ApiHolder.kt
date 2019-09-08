@@ -8,8 +8,8 @@ import java.util.concurrent.TimeUnit
 
 
 object ApiHolder {
-    private val URL_BASE = "https://github.com"
-    private val API_URL_BASE = "https://api.github.com"
+    private const val URL_BASE = "https://github.com"
+    private const val API_URL_BASE = "https://api.github.com"
 
 
     val publicApi: PublicApi by lazy {
