@@ -1,5 +1,6 @@
 package tonko.com.client.api
 
+import io.reactivex.Single
 import retrofit2.Call
 import retrofit2.http.*
 import tonko.com.client.model.AccessToken
@@ -27,7 +28,7 @@ interface PublicApi {
     @GET("users/{user}/repos")
     fun getRepoList(
             @Path("user") user: String
-    ): Call<ArrayList<Repos>>
+    ): Single<ArrayList<Repos>>
 
     @GET("user")
     fun getRepoListWithToken(

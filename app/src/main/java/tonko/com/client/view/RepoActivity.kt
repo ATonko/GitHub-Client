@@ -2,17 +2,7 @@ package tonko.com.client.view
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.GridLayoutManager
-import android.util.Log
-import android.widget.Toast
-import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.activity_repo.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import tonko.com.client.R
-import tonko.com.client.adapters.CommitsAdapter
-import tonko.com.client.model.Commits
 import tonko.com.client.presenters.RepoPresenter
 
 class RepoActivity : AppCompatActivity() {
@@ -26,7 +16,7 @@ class RepoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_repo)
-        presenter.getCommits(
+        /*presenter.getCommits(
                 intent.getStringExtra(USER),
                 intent.getStringExtra(PROJECT)).enqueue(object : Callback<List<Commits>> {
             override fun onFailure(call: Call<List<Commits>>?, t: Throwable?) {
@@ -44,5 +34,6 @@ class RepoActivity : AppCompatActivity() {
             }
 
         })
+        */
     }
 }

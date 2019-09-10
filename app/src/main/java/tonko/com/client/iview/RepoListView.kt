@@ -4,5 +4,6 @@ import tonko.com.client.model.Repos
 
 interface RepoListView : BaseView {
     fun isSuccess(repos: ArrayList<Repos>)
-    fun isError()
+    fun isError(error: String)
+    fun isEmptyList()
 }

@@ -25,7 +25,7 @@ class RepoPresenter : BasePresenter<RepoView>(), IRepoPresenter
 
             override fun onResponse(call: Call<List<Commits>>, response: Response<List<Commits>>)
             {
-                view?.
+                //view?.
             }
 
         })

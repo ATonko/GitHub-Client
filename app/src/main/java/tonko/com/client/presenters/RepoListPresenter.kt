@@ -1,33 +1,37 @@
 package tonko.com.client.presenters
 
-import android.util.Log
-import tonko.com.client.api.ApiHolder
-import tonko.com.client.api.CustomEnqueue
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import tonko.com.client.iview.RepoListView
-import tonko.com.client.model.Repos
+import tonko.com.client.model.RepoListRepository
+import tonko.com.client.model.interfaces.IRepoListRepository
 import tonko.com.client.presenters.interfaces.IRepoListPresenter
 
 class RepoListPresenter : BasePresenter<RepoListView>(), IRepoListPresenter
 {
-
-    private val privateApi = ApiHolder.privateApi
-    private val custom = CustomEnqueue<ArrayList<Repos>>()
+    private val repository: IRepoListRepository = RepoListRepository()
+    private val disposables = CompositeDisposable()
 
     override fun getList(login: String)
     {
+        disposables.add(repository.getList(login)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if (it.isEmpty()) view?.isEmptyList()
+                    else view?.isSuccess(it)
 
-        val response = privateApi.getRepoList(login)
-        custom.customEnqueue(response,
-                {
-                    view?.isError()
                 }, {
-            if (it.isSuccessful)
-            {
-                view?.isSuccess(it.body()!!)
-            } else
-            {
-                view?.isError()
-            }
-        })
+                    view?.isError(it.message.toString())
+                })
+        )
     }
+
+    override fun detachView()
+    {
+        super.detachView()
+        disposables.dispose()
+    }
+
 }

@@ -3,27 +3,23 @@ package tonko.com.client.view
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.net.Uri
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.View
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.activity_auth.*
 import kotlinx.android.synthetic.main.activity_repo_list.*
 import tonko.com.client.LOGIN
 import tonko.com.client.PASSWORD
 import tonko.com.client.R
-import tonko.com.client.TOKEN
 import tonko.com.client.adapters.RepoListAdapter
 import tonko.com.client.adapters.RepoListener
 import tonko.com.client.iview.RepoListView
 import tonko.com.client.model.Repos
 import tonko.com.client.presenters.RepoListPresenter
 
-class RepoListActivity : AppCompatActivity(), RepoListener, RepoListView {
+class RepoListActivity : AppCompatActivity(), RepoListener, RepoListView
+{
     private val USER = "USER"
     private val PROJECT = "PROJECT"
 
@@ -31,14 +27,16 @@ class RepoListActivity : AppCompatActivity(), RepoListener, RepoListView {
     private var list = ArrayList<Repos>()
     private lateinit var sPref: SharedPreferences
 
-    override fun onClick(position: Int) {
+    override fun onClick(position: Int)
+    {
         val intent = Intent(this, RepoActivity::class.java)
         intent.putExtra(USER, list[position].author!!.login)
         intent.putExtra(PROJECT, list[position].name)
         startActivity(intent)
     }
 
-    override fun isSuccess(repos: ArrayList<Repos>) {
+    override fun isSuccess(repos: ArrayList<Repos>)
+    {
         rv.visibility = View.VISIBLE
         llNameWithAvatar.visibility = View.VISIBLE
         llError.visibility = View.GONE
@@ -52,20 +50,31 @@ class RepoListActivity : AppCompatActivity(), RepoListener, RepoListView {
         rv.adapter = RepoListAdapter(list, this)
     }
 
-    override fun isError() {
+    override fun isError(error: String)
+    {
         rv.visibility = View.GONE
         llNameWithAvatar.visibility = View.GONE
         llError.visibility = View.VISIBLE
+        tvError.text = "Error is $error"
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun isEmptyList()
+    {
+        //todo сделать че нить поинтереснее
+        llError.visibility = View.VISIBLE
+        tvError.text = "Empty List"
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_repo_list)
 
         presenter.attachView(this)
         sPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         btnReload.setOnClickListener {
-            if (intent.getStringExtra(LOGIN) != null) {
+            if (intent.getStringExtra(LOGIN) != null)
+            {
                 presenter.getList(intent.getStringExtra(LOGIN))
             }
         }
@@ -80,15 +89,16 @@ class RepoListActivity : AppCompatActivity(), RepoListener, RepoListView {
         rv.layoutManager = LinearLayoutManager(this)
 
         //todo чево каво
-        if (intent.getStringExtra(LOGIN) != null) {
+        if (intent.getStringExtra(LOGIN) != null)
+        {
             presenter.getList(intent.getStringExtra(LOGIN))
         }
         /*if (sPref.getString(LOGIN, "")!=null) {
             presenter.getList(sPref.getString(LOGIN, ""))
         }
         */
-        sPref.getString(LOGIN,"")?.let {
-            if(it.isNotEmpty()) presenter.getList(it)
+        sPref.getString(LOGIN, "")?.let {
+            if (it.isNotEmpty()) presenter.getList(it)
         }
 
 
