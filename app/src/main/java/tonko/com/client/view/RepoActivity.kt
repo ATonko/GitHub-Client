@@ -2,10 +2,16 @@ package tonko.com.client.view
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_repo.*
 import tonko.com.client.R
+import tonko.com.client.adapters.CommitsAdapter
+import tonko.com.client.iview.RepoView
+import tonko.com.client.model.Commits
 import tonko.com.client.presenters.RepoPresenter
 
-class RepoActivity : AppCompatActivity() {
+class RepoActivity : AppCompatActivity(), RepoView
+{
 
     private val USER = "USER"
     private val PROJECT = "PROJECT"
@@ -13,27 +19,39 @@ class RepoActivity : AppCompatActivity() {
     private val presenter = RepoPresenter()
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_repo)
-        /*presenter.getCommits(
+        presenter.attachView(this)
+        presenter.getCommits(
                 intent.getStringExtra(USER),
-                intent.getStringExtra(PROJECT)).enqueue(object : Callback<List<Commits>> {
-            override fun onFailure(call: Call<List<Commits>>?, t: Throwable?) {
-                Toast.makeText(this@RepoActivity,"Проблемы с интернетом", Toast.LENGTH_LONG).show()
-            }
-
-            override fun onResponse(call: Call<List<Commits>>?, response: Response<List<Commits>>?) {
-                Log.i("MyTag", "response")
-                if (response!!.isSuccessful) {
-                    Log.i("MyTag", "success")
-                    rvRepo.layoutManager = GridLayoutManager(this@RepoActivity, 3)
-                    Log.i("MyTag", "${response.body()!!.size}")
-                    rvRepo.adapter = CommitsAdapter(response.body()!!)
-                }
-            }
-
-        })
-        */
+                intent.getStringExtra(PROJECT))
     }
+
+    override fun isSuccess(list: List<Commits>)
+    {
+        rvRepo.layoutManager = LinearLayoutManager(
+                this@RepoActivity,
+                LinearLayoutManager.VERTICAL,
+                false)
+        rvRepo.adapter = CommitsAdapter(list)
+    }
+
+    override fun isError(error: String)
+    {
+        //todo че нить придумать для вывода ошибки
+    }
+
+    override fun isEmptyList()
+    {
+        //todo че нить придумать для пустого списка
+    }
+
+    override fun onDestroy()
+    {
+        super.onDestroy()
+        presenter.detachView()
+    }
+
 }

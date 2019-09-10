@@ -39,5 +39,5 @@ interface PublicApi {
     fun getCommits(
             @Path("user") user: String,
             @Path("project") project: String
-    ): Call<List<Commits>>
+    ): Single<List<Commits>>
 }
