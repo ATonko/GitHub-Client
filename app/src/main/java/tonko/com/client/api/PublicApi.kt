@@ -18,12 +18,12 @@ interface PublicApi {
             @Field("client_id") clientId: String,
             @Field("client_secret") clientSecret: String,
             @Field("code") code: String
-    ): Call<AccessToken>
+    ): Single<AccessToken>
 
     @GET("user")
     fun getBasicAuth(
             @Header("Authorization") authHeader: String
-    ): Call<Owner>
+    ): Single<Owner>
 
     @GET("users/{user}/repos")
     fun getRepoList(

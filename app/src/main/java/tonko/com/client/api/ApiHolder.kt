@@ -21,6 +21,7 @@ object ApiHolder {
                 .client(client)
                 .baseUrl(URL_BASE)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
                 .create(PublicApi::class.java)
 
