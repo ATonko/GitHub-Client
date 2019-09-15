@@ -2,31 +2,22 @@ package tonko.com.client.presenters
 
 import android.util.Base64
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import tonko.com.client.R
-import tonko.com.client.api.ApiHolder
+import tonko.com.client.model.repository.AuthRepository
 import tonko.com.client.presenters.interfaces.IAuthPresenter
 import tonko.com.client.view.interfaces.AuthView
 
 class AuthPresenter : BasePresenter<AuthView>(), IAuthPresenter
 {
-
-    private val publicApi = ApiHolder.publicApi
-    private val privateApi = ApiHolder.privateApi
-    private val disposable = CompositeDisposable()
+    private val repository = AuthRepository()
 
     override fun loginOAuth(id: String,
                             secret: String,
                             code: String)
     {
-        val response = publicApi.getAccessToken(
-                id,
-                secret,
-                code)
-
-        disposable.add(
-                response
+        disposables.add(
+                repository.getAccessToken(id, secret, code)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
@@ -39,12 +30,8 @@ class AuthPresenter : BasePresenter<AuthView>(), IAuthPresenter
 
     private fun getListWithToken(token: String)
     {
-
-        val response = privateApi.getBasicAuth(
-                "Bearer $token")
-
-        disposable.add(
-                response
+        disposables.add(
+                repository.getBasicAuth("Bearer $token")
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
@@ -62,14 +49,12 @@ class AuthPresenter : BasePresenter<AuthView>(), IAuthPresenter
     {
         if (isLoginValid(login) && isPasswordValid(password))
         {
-            val response = privateApi.getBasicAuth(
-                    "Basic " +
-                            Base64.encodeToString(
-                                    "$login:$password".toByteArray(),
-                                    Base64.NO_WRAP))
-
-            disposable.add(
-                    response
+            disposables.add(
+                    repository.getBasicAuth(
+                            "Basic " +
+                                    Base64.encodeToString(
+                                            "$login:$password".toByteArray(),
+                                            Base64.NO_WRAP))
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe({
@@ -88,10 +73,4 @@ class AuthPresenter : BasePresenter<AuthView>(), IAuthPresenter
     private fun isPasswordValid(password: String) = password.length > 2
 
     private fun isLoginValid(login: String) = login.contains("@")
-
-    override fun detachView()
-    {
-        super.detachView()
-        disposable.dispose()
-    }
 }
