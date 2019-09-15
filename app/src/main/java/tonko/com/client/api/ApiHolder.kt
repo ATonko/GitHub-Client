@@ -7,37 +7,38 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 
-object ApiHolder {
+object ApiHolder
+{
     private const val URL_BASE = "https://github.com"
     private const val API_URL_BASE = "https://api.github.com"
 
 
-    val publicApi: PublicApi by lazy {
-        val client = OkHttpClient().newBuilder()
+    private val client: OkHttpClient by lazy {
+        return@lazy OkHttpClient().newBuilder()
                 .readTimeout(10, TimeUnit.SECONDS)
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .build()
-        Retrofit.Builder()
+    }
+
+    private val baseBuilder: Retrofit.Builder by lazy {
+        return@lazy Retrofit.Builder()
                 .client(client)
-                .baseUrl(URL_BASE)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+    }
+
+    val publicApi: ApiMethods by lazy {
+        baseBuilder
+                .baseUrl(URL_BASE)
                 .build()
-                .create(PublicApi::class.java)
+                .create(ApiMethods::class.java)
 
     }
-    val privateApi: PublicApi by lazy {
-        val client = OkHttpClient().newBuilder()
-                .readTimeout(10, TimeUnit.SECONDS)
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .build()
-        Retrofit.Builder()
-                .client(client)
+    val privateApi: ApiMethods by lazy {
+        baseBuilder
                 .baseUrl(API_URL_BASE)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
-                .create(PublicApi::class.java)
+                .create(ApiMethods::class.java)
 
     }
 }

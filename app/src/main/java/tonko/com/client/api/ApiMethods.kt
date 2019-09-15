@@ -9,7 +9,8 @@ import tonko.com.client.model.Owner
 import tonko.com.client.model.Repos
 
 
-interface PublicApi {
+interface ApiMethods
+{
 
     @Headers("Accept: application/json")
     @FormUrlEncoded
