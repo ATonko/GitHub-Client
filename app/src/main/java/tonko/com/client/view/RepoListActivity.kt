@@ -14,12 +14,12 @@ import tonko.com.client.adapters.RepoListAdapter
 import tonko.com.client.adapters.RepoListener
 import tonko.com.client.model.Repos
 import tonko.com.client.presenters.RepoListPresenter
-import tonko.com.client.view.interfaces.RepoListView
+import tonko.com.client.view.interfaces.BaseListView
 
-class RepoListActivity : AppCompatActivity(), RepoListener, RepoListView
+class RepoListActivity : AppCompatActivity(), RepoListener, BaseListView<Repos>
 {
     private val presenter = RepoListPresenter()
-    private var list = ArrayList<Repos>()
+    private var list: List<Repos> = ArrayList()
     private lateinit var sPref: SharedPreferences
 
     override fun onClick(position: Int)
@@ -30,7 +30,7 @@ class RepoListActivity : AppCompatActivity(), RepoListener, RepoListView
         startActivity(intent)
     }
 
-    override fun isSuccess(repos: ArrayList<Repos>)
+    override fun isSuccess(list: List<Repos>)
     {
         rv.visibility = View.VISIBLE
         llNameWithAvatar.visibility = View.VISIBLE
@@ -38,11 +38,11 @@ class RepoListActivity : AppCompatActivity(), RepoListener, RepoListView
 
         Glide
                 .with(this)
-                .load(repos[0].author?.avatar_uri)
+                .load(list[0].author?.avatar_uri)
                 .into(ivAvatar)
-        tvAuthorName.text = repos[0].author?.login
-        list = repos
-        rv.adapter = RepoListAdapter(list, this)
+        tvAuthorName.text = list[0].author?.login
+        this.list = list
+        rv.adapter = RepoListAdapter(this.list, this)
     }
 
     override fun isError(error: Int)

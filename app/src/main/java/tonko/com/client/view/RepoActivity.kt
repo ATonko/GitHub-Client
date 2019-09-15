@@ -12,9 +12,9 @@ import tonko.com.client.USER
 import tonko.com.client.adapters.CommitsAdapter
 import tonko.com.client.model.Commits
 import tonko.com.client.presenters.RepoPresenter
-import tonko.com.client.view.interfaces.RepoView
+import tonko.com.client.view.interfaces.BaseListView
 
-class RepoActivity : AppCompatActivity(), RepoView
+class RepoActivity : AppCompatActivity(), BaseListView<Commits>
 {
     private val presenter = RepoPresenter()
 
