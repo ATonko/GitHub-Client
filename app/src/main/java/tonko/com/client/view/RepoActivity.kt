@@ -10,9 +10,9 @@ import tonko.com.client.PROJECT
 import tonko.com.client.R
 import tonko.com.client.USER
 import tonko.com.client.adapters.CommitsAdapter
-import tonko.com.client.iview.RepoView
 import tonko.com.client.model.Commits
 import tonko.com.client.presenters.RepoPresenter
+import tonko.com.client.view.interfaces.RepoView
 
 class RepoActivity : AppCompatActivity(), RepoView
 {

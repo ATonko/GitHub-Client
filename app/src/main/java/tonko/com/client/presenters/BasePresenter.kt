@@ -1,6 +1,6 @@
 package tonko.com.client.presenters
 
-import tonko.com.client.iview.BaseView
+import tonko.com.client.view.interfaces.BaseView
 
 abstract class BasePresenter<V : BaseView>
 {

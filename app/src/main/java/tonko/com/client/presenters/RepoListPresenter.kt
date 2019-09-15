@@ -4,10 +4,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import tonko.com.client.R
-import tonko.com.client.iview.RepoListView
 import tonko.com.client.model.RepoListRepository
 import tonko.com.client.model.interfaces.IRepoListRepository
 import tonko.com.client.presenters.interfaces.IRepoListPresenter
+import tonko.com.client.view.interfaces.RepoListView
 
 class RepoListPresenter : BasePresenter<RepoListView>(), IRepoListPresenter
 {

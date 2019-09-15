@@ -6,8 +6,8 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import tonko.com.client.R
 import tonko.com.client.api.ApiHolder
-import tonko.com.client.iview.AuthView
 import tonko.com.client.presenters.interfaces.IAuthPresenter
+import tonko.com.client.view.interfaces.AuthView
 
 class AuthPresenter : BasePresenter<AuthView>(), IAuthPresenter
 {

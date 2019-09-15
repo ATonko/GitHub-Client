@@ -12,8 +12,8 @@ import tonko.com.client.AVATAR_URL
 import tonko.com.client.LOGIN
 import tonko.com.client.PASSWORD
 import tonko.com.client.R
-import tonko.com.client.iview.AuthView
 import tonko.com.client.presenters.AuthPresenter
+import tonko.com.client.view.interfaces.AuthView
 
 class AuthActivity : AppCompatActivity(), AuthView
 {

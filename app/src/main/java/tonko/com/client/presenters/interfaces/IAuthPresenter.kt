@@ -1,7 +1,5 @@
 package tonko.com.client.presenters.interfaces
 
-import tonko.com.client.iview.BaseView
-
 interface IAuthPresenter
 {
     fun basicLogin(

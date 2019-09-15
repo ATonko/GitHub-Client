@@ -12,9 +12,9 @@ import kotlinx.android.synthetic.main.activity_repo_list.*
 import tonko.com.client.*
 import tonko.com.client.adapters.RepoListAdapter
 import tonko.com.client.adapters.RepoListener
-import tonko.com.client.iview.RepoListView
 import tonko.com.client.model.Repos
 import tonko.com.client.presenters.RepoListPresenter
+import tonko.com.client.view.interfaces.RepoListView
 
 class RepoListActivity : AppCompatActivity(), RepoListener, RepoListView
 {
