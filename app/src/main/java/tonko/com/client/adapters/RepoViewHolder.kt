@@ -1,13 +1,12 @@
 package tonko.com.client.adapters
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import kotlinx.android.synthetic.main.item_repo.view.*
 import tonko.com.client.model.Repos
 
 
 class RepoViewHolder(itemView: View,
-                     var listener: RepoListener) : RecyclerView.ViewHolder(itemView), View.OnClickListener
+                     var listener: RepoListener) : AbstractViewHolder<Repos>(itemView), View.OnClickListener
 {
     init
     {
@@ -19,14 +18,14 @@ class RepoViewHolder(itemView: View,
         listener.onClick(adapterPosition)
     }
 
-    fun bind(repo: Repos)
+    override fun bind(item: Repos)
     {
         with(itemView) {
-            tvTitle.text = repo.name
-            tvLanguage.text = repo.language
-            tvForks.text = repo.forks.toString()
-            tvWatchers.text = repo.watchers.toString()
-            tvDescription.text = repo.description
+            tvTitle.text = item.name
+            tvLanguage.text = item.language
+            tvForks.text = item.forks.toString()
+            tvWatchers.text = item.watchers.toString()
+            tvDescription.text = item.description
         }
     }
 }

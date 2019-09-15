@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.activity_repo.*
 import tonko.com.client.PROJECT
 import tonko.com.client.R
 import tonko.com.client.USER
-import tonko.com.client.adapters.CommitsAdapter
+import tonko.com.client.adapters.CommitsListAdapter
 import tonko.com.client.model.Commits
 import tonko.com.client.presenters.RepoPresenter
 import tonko.com.client.view.interfaces.BaseListView
@@ -36,7 +36,7 @@ class RepoActivity : AppCompatActivity(), BaseListView<Commits>
                 this@RepoActivity,
                 LinearLayoutManager.VERTICAL,
                 false)
-        rvRepo.adapter = CommitsAdapter(list)
+        rvRepo.adapter = CommitsListAdapter(list)
     }
 
     override fun isError(error: Int)
