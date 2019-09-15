@@ -9,9 +9,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_repo_list.*
-import tonko.com.client.LOGIN
-import tonko.com.client.PASSWORD
-import tonko.com.client.R
+import tonko.com.client.*
 import tonko.com.client.adapters.RepoListAdapter
 import tonko.com.client.adapters.RepoListener
 import tonko.com.client.iview.RepoListView
@@ -20,9 +18,6 @@ import tonko.com.client.presenters.RepoListPresenter
 
 class RepoListActivity : AppCompatActivity(), RepoListener, RepoListView
 {
-    private val USER = "USER"
-    private val PROJECT = "PROJECT"
-
     private val presenter = RepoListPresenter()
     private var list = ArrayList<Repos>()
     private lateinit var sPref: SharedPreferences
@@ -50,19 +45,18 @@ class RepoListActivity : AppCompatActivity(), RepoListener, RepoListView
         rv.adapter = RepoListAdapter(list, this)
     }
 
-    override fun isError(error: String)
+    override fun isError(error: Int)
     {
         rv.visibility = View.GONE
         llNameWithAvatar.visibility = View.GONE
         llError.visibility = View.VISIBLE
-        tvError.text = "Error is $error"
+        tvError.text = getString(error)
     }
 
     override fun isEmptyList()
     {
-        //todo сделать че нить поинтереснее
         llError.visibility = View.VISIBLE
-        tvError.text = "Empty List"
+        tvError.text = getString(R.string.no_repos_here)
     }
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -88,15 +82,6 @@ class RepoListActivity : AppCompatActivity(), RepoListener, RepoListView
 
         rv.layoutManager = LinearLayoutManager(this)
 
-        //todo чево каво
-        if (intent.getStringExtra(LOGIN) != null)
-        {
-            presenter.getList(intent.getStringExtra(LOGIN))
-        }
-        /*if (sPref.getString(LOGIN, "")!=null) {
-            presenter.getList(sPref.getString(LOGIN, ""))
-        }
-        */
         sPref.getString(LOGIN, "")?.let {
             if (it.isNotEmpty()) presenter.getList(it)
         }

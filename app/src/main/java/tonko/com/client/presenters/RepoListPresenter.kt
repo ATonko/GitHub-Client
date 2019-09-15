@@ -3,6 +3,7 @@ package tonko.com.client.presenters
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import tonko.com.client.R
 import tonko.com.client.iview.RepoListView
 import tonko.com.client.model.RepoListRepository
 import tonko.com.client.model.interfaces.IRepoListRepository
@@ -23,7 +24,7 @@ class RepoListPresenter : BasePresenter<RepoListView>(), IRepoListPresenter
                     else view?.isSuccess(it)
 
                 }, {
-                    view?.isError(it.message.toString())
+                    view?.isError(R.string.no_repos_here)
                 })
         )
     }

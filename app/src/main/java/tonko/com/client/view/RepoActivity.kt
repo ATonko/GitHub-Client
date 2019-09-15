@@ -3,8 +3,12 @@ package tonko.com.client.view
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_repo.*
+import tonko.com.client.PROJECT
 import tonko.com.client.R
+import tonko.com.client.USER
 import tonko.com.client.adapters.CommitsAdapter
 import tonko.com.client.iview.RepoView
 import tonko.com.client.model.Commits
@@ -12,10 +16,6 @@ import tonko.com.client.presenters.RepoPresenter
 
 class RepoActivity : AppCompatActivity(), RepoView
 {
-
-    private val USER = "USER"
-    private val PROJECT = "PROJECT"
-
     private val presenter = RepoPresenter()
 
 
@@ -31,6 +31,7 @@ class RepoActivity : AppCompatActivity(), RepoView
 
     override fun isSuccess(list: List<Commits>)
     {
+        tvNoRepos.visibility = View.GONE
         rvRepo.layoutManager = LinearLayoutManager(
                 this@RepoActivity,
                 LinearLayoutManager.VERTICAL,
@@ -38,14 +39,14 @@ class RepoActivity : AppCompatActivity(), RepoView
         rvRepo.adapter = CommitsAdapter(list)
     }
 
-    override fun isError(error: String)
+    override fun isError(error: Int)
     {
-        //todo че нить придумать для вывода ошибки
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show()
     }
 
     override fun isEmptyList()
     {
-        //todo че нить придумать для пустого списка
+        tvNoRepos.visibility = View.VISIBLE
     }
 
     override fun onDestroy()

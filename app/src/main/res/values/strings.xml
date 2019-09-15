@@ -14,5 +14,7 @@
 
     <string name="account_type">client</string>
     <string name="quit">Выйти из аккаунта</string>
+    <string name="error_not_valid_mail_or_password">Неверный формат логина или пароля</string>
+    <string name="no_repos_here">Здесь пока нет репозиториев</string>
 
 </resources>

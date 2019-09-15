@@ -6,10 +6,12 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_auth.*
-import tonko.com.client.*
+import tonko.com.client.AVATAR_URL
+import tonko.com.client.LOGIN
+import tonko.com.client.PASSWORD
+import tonko.com.client.R
 import tonko.com.client.iview.AuthView
 import tonko.com.client.presenters.AuthPresenter
 
@@ -60,20 +62,15 @@ class AuthActivity : AppCompatActivity(), AuthView
         startActivity(intent)
     }
 
-    override fun isError(code: String)
+    override fun isError(code: Int)
     {
-        when (code)
-        {
-            AUTH_PROBLEM -> Toast.makeText(this, resources.getString(R.string.auth_error), Toast.LENGTH_LONG).show()
-            NET_PROBLEM -> Toast.makeText(this, resources.getString(R.string.network_error), Toast.LENGTH_LONG).show()
-        }
+        Toast.makeText(this, code, Toast.LENGTH_LONG).show()
     }
 
 
     override fun onResume()
     {
         super.onResume()
-        //todo че тут делается
         val uri = intent.data
         if (uri != null && uri.toString().startsWith(redirectUri))
         {
@@ -93,8 +90,9 @@ class AuthActivity : AppCompatActivity(), AuthView
     private fun workingWithToken(uri: Uri)
     {
         val code = uri.getQueryParameter("code")
-        presenter.loginOAuth(clientId, clientSecret, code)
-
+        code?.let {
+            presenter.loginOAuth(clientId, clientSecret, it)
+        }
     }
 
     override fun onDestroy()
