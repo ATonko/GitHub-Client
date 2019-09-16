@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_repo_list.*
 import tonko.com.client.*
 import tonko.com.client.adapters.RepoListAdapter
 import tonko.com.client.adapters.RepoListener
-import tonko.com.client.model.Repos
+import tonko.com.client.api.json_responses.Repos
 import tonko.com.client.presenters.RepoListPresenter
 import tonko.com.client.view.interfaces.BaseListView
 
@@ -38,7 +38,7 @@ class RepoListActivity : AppCompatActivity(), RepoListener, BaseListView<Repos>
 
         Glide
                 .with(this)
-                .load(list[0].author?.avatar_uri)
+                .load(list[0].author?.avatar_url)
                 .into(ivAvatar)
         tvAuthorName.text = list[0].author?.login
         this.list = list

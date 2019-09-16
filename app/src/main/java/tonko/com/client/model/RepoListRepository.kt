@@ -1,4 +1,4 @@
-package tonko.com.client.model.repository
+package tonko.com.client.model
 
 import tonko.com.client.api.ApiHolder
 import tonko.com.client.model.interfaces.IRepoListRepository

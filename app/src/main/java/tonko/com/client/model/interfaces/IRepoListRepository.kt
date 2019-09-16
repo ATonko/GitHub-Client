@@ -1,7 +1,7 @@
 package tonko.com.client.model.interfaces
 
 import io.reactivex.Single
-import tonko.com.client.model.Repos
+import tonko.com.client.api.json_responses.Repos
 
 interface IRepoListRepository
 {

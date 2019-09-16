@@ -1,6 +1,5 @@
-package tonko.com.client.model
+package tonko.com.client.api.json_responses
 
-import android.net.Uri
 import com.google.gson.annotations.SerializedName
 
 class Repos {

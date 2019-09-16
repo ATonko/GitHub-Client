@@ -1,9 +1,9 @@
-package tonko.com.client.model.repository
+package tonko.com.client.model
 
 import io.reactivex.Single
 import tonko.com.client.api.ApiHolder
-import tonko.com.client.model.AccessToken
-import tonko.com.client.model.Owner
+import tonko.com.client.api.json_responses.AccessToken
+import tonko.com.client.api.json_responses.Owner
 import tonko.com.client.model.interfaces.IAuthRepository
 
 class AuthRepository : IAuthRepository

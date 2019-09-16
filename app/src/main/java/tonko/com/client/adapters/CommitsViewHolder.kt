@@ -2,7 +2,7 @@ package tonko.com.client.adapters
 
 import android.view.View
 import kotlinx.android.synthetic.main.item_commits.view.*
-import tonko.com.client.model.Commits
+import tonko.com.client.api.json_responses.Commits
 
 class CommitsViewHolder(itemView: View) : AbstractViewHolder<Commits>(itemView)
 {

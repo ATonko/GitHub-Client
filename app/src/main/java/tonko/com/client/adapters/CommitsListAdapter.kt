@@ -3,7 +3,7 @@ package tonko.com.client.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import tonko.com.client.R
-import tonko.com.client.model.Commits
+import tonko.com.client.api.json_responses.Commits
 
 
 class CommitsListAdapter(override var list: List<Commits>) : AbstractListAdapter<Commits, CommitsViewHolder>(list)

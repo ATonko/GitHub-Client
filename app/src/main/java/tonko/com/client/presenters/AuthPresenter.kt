@@ -4,7 +4,7 @@ import android.util.Base64
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import tonko.com.client.R
-import tonko.com.client.model.repository.AuthRepository
+import tonko.com.client.model.AuthRepository
 import tonko.com.client.presenters.interfaces.IAuthPresenter
 import tonko.com.client.view.interfaces.AuthView
 
@@ -58,7 +58,7 @@ class AuthPresenter : BasePresenter<AuthView>(), IAuthPresenter
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe({
-                                view?.isSuccess(it.login, it.avatar_uri)
+                                view?.isSuccess(it.login, it.avatar_url)
                             }, {
                                 view?.isError(R.string.auth_error)
                             })

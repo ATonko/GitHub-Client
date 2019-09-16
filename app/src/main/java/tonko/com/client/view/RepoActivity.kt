@@ -10,7 +10,7 @@ import tonko.com.client.PROJECT
 import tonko.com.client.R
 import tonko.com.client.USER
 import tonko.com.client.adapters.CommitsListAdapter
-import tonko.com.client.model.Commits
+import tonko.com.client.api.json_responses.Commits
 import tonko.com.client.presenters.RepoPresenter
 import tonko.com.client.view.interfaces.BaseListView
 

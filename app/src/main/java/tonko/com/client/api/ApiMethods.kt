@@ -3,10 +3,10 @@ package tonko.com.client.api
 import io.reactivex.Single
 import retrofit2.Call
 import retrofit2.http.*
-import tonko.com.client.model.AccessToken
-import tonko.com.client.model.Commits
-import tonko.com.client.model.Owner
-import tonko.com.client.model.Repos
+import tonko.com.client.api.json_responses.AccessToken
+import tonko.com.client.api.json_responses.Commits
+import tonko.com.client.api.json_responses.Owner
+import tonko.com.client.api.json_responses.Repos
 
 
 interface ApiMethods

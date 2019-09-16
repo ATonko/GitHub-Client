@@ -2,7 +2,7 @@ package tonko.com.client.adapters
 
 import android.view.View
 import kotlinx.android.synthetic.main.item_repo.view.*
-import tonko.com.client.model.Repos
+import tonko.com.client.api.json_responses.Repos
 
 
 class RepoViewHolder(itemView: View,
