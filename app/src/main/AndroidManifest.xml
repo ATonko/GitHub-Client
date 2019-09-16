@@ -26,9 +26,7 @@
             android:name=".view.RepoListActivity"
             />
         <activity android:name=".view.RepoActivity" />
-        <activity
-            android:name=".view.AuthActivity"
-            android:noHistory="true">
+        <activity android:name=".view.AuthActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

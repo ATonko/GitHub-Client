@@ -62,9 +62,9 @@ class AuthActivity : AppCompatActivity(), AuthView
         startActivity(intent)
     }
 
-    override fun isError(code: Int)
+    override fun isError(error: Int)
     {
-        Toast.makeText(this, code, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show()
     }
 
 

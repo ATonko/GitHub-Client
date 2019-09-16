@@ -78,6 +78,7 @@ class RepoListActivity : AppCompatActivity(), RepoListener, BaseListView<Repos>
             editor.putString(PASSWORD, "")
             editor.apply()
             startActivity(Intent(this, AuthActivity::class.java))
+            finish()
         }
 
         rv.layoutManager = LinearLayoutManager(this)
