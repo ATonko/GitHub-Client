@@ -1,21 +1,19 @@
 package tonko.com.client.presenters
 
 import io.reactivex.disposables.CompositeDisposable
+import tonko.com.client.presenters.interfaces.IPresenter
 import tonko.com.client.view.interfaces.BaseView
 
-abstract class BasePresenter<V : BaseView>
-{
+abstract class BasePresenter<V : BaseView> : IPresenter<V> {
     val disposables = CompositeDisposable()
 
     var view: V? = null
 
-    open fun attachView(view: V)
-    {
+    override fun attachView(view: V) {
         this.view = view
     }
 
-    open fun detachView()
-    {
+    override fun detachView() {
         this.view = null
         disposables.dispose()
     }
