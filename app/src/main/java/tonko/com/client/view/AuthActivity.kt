@@ -1,6 +1,5 @@
 package tonko.com.client.view
 
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
@@ -9,11 +8,13 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_auth.*
 import tonko.com.client.AVATAR_URL
+import tonko.com.client.App
 import tonko.com.client.LOGIN
 import tonko.com.client.PASSWORD
 import tonko.com.client.R
 import tonko.com.client.presenters.AuthPresenter
 import tonko.com.client.view.interfaces.AuthView
+import javax.inject.Inject
 
 class AuthActivity : AppCompatActivity(), AuthView
 {
@@ -22,13 +23,15 @@ class AuthActivity : AppCompatActivity(), AuthView
     private val clientSecret = "e76843019ec43ad24161f0be281df501d499631c"
     private val redirectUri = "tonko://callback"
     private var TOKEN = "THE_TOKEN"
-    private lateinit var sPref: SharedPreferences
+    @Inject
+    lateinit var sPref: SharedPreferences
     private val presenter = AuthPresenter()
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
+
 
         presenter.attachView(this)
         btnOAuth.setOnClickListener {
@@ -51,7 +54,7 @@ class AuthActivity : AppCompatActivity(), AuthView
 
     override fun isSuccess(login: String, avatar_url: String)
     {
-        sPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        sPref = App.appComponent.plusSharedPrefCompoment().getSharedPref()
         val editor = sPref.edit()
         editor.putString(LOGIN, login)
         editor.putString(PASSWORD, etPassword.text.toString())
