@@ -5,6 +5,8 @@ import android.content.Context
 import dagger.Component
 import dagger.Module
 import dagger.Provides
+import tonko.com.client.api.ApiHolder
+import tonko.com.client.api.ApiMethods
 import tonko.com.client.dagger.RepoComponent
 import tonko.com.client.dagger.RepoListComponent
 import tonko.com.client.dagger.SharedPreferencesComponent
@@ -29,14 +31,19 @@ class App : Application() {
 
 @Module
 class AppModule(val context: Context) {
+
+    @Provides
+    @Singleton
+    fun provideApiMethods(): ApiMethods = ApiHolder.privateApi
+
     @Provides
     @Singleton
     fun provideContext(): Context = context
 
     @Provides
     @Singleton
-    fun provideRepository(): IRepoRepository =
-            RepoRepository()
+    fun provideRepository(apiMethods: ApiMethods): IRepoRepository =
+            RepoRepository(apiMethods)
 }
 
 @Component(modules = [AppModule::class])
