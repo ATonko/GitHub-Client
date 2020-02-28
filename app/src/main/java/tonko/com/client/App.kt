@@ -5,7 +5,11 @@ import android.content.Context
 import dagger.Component
 import dagger.Module
 import dagger.Provides
+import tonko.com.client.dagger.RepoComponent
+import tonko.com.client.dagger.RepoListComponent
 import tonko.com.client.dagger.SharedPreferencesComponent
+import tonko.com.client.model.RepoRepository
+import tonko.com.client.model.interfaces.IRepoRepository
 import javax.inject.Singleton
 
 class App : Application() {
@@ -28,11 +32,18 @@ class AppModule(val context: Context) {
     @Provides
     @Singleton
     fun provideContext(): Context = context
+
+    @Provides
+    @Singleton
+    fun provideRepository(): IRepoRepository =
+            RepoRepository()
 }
 
 @Component(modules = [AppModule::class])
 @Singleton
 interface AppComponent {
     fun plusSharedPrefCompoment(): SharedPreferencesComponent
+    fun plusRepoListComponent(): RepoListComponent
+    fun plusRepoComponent(): RepoComponent
 }
 

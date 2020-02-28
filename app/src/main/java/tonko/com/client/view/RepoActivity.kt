@@ -6,31 +6,34 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_repo.*
+import tonko.com.client.App
 import tonko.com.client.PROJECT
 import tonko.com.client.R
 import tonko.com.client.USER
 import tonko.com.client.adapters.CommitsListAdapter
 import tonko.com.client.api.json_responses.Commits
-import tonko.com.client.presenters.RepoPresenter
+import tonko.com.client.presenters.interfaces.IRepoPresenter
 import tonko.com.client.view.interfaces.BaseListView
+import javax.inject.Inject
 
-class RepoActivity : AppCompatActivity(), BaseListView<Commits>
-{
-    private val presenter = RepoPresenter()
+class RepoActivity : AppCompatActivity(), BaseListView<Commits> {
+    @Inject
+    lateinit var presenter: IRepoPresenter
 
 
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_repo)
+
+        App.appComponent.plusRepoComponent().inject(this)
+
         presenter.attachView(this)
         presenter.getCommits(
                 intent.getStringExtra(USER),
                 intent.getStringExtra(PROJECT))
     }
 
-    override fun isSuccess(list: List<Commits>)
-    {
+    override fun isSuccess(list: List<Commits>) {
         tvNoRepos.visibility = View.GONE
         rvRepo.layoutManager = LinearLayoutManager(
                 this@RepoActivity,
@@ -39,18 +42,15 @@ class RepoActivity : AppCompatActivity(), BaseListView<Commits>
         rvRepo.adapter = CommitsListAdapter(list)
     }
 
-    override fun isError(error: Int)
-    {
+    override fun isError(error: Int) {
         Toast.makeText(this, error, Toast.LENGTH_LONG).show()
     }
 
-    override fun isEmptyList()
-    {
+    override fun isEmptyList() {
         tvNoRepos.visibility = View.VISIBLE
     }
 
-    override fun onDestroy()
-    {
+    override fun onDestroy() {
         super.onDestroy()
         presenter.detachView()
     }

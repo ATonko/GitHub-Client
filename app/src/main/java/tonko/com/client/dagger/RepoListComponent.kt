@@ -1,10 +1,9 @@
 package tonko.com.client.dagger
 
-import dagger.Component
 import dagger.Module
 import dagger.Provides
-import tonko.com.client.model.RepoListRepository
-import tonko.com.client.model.interfaces.IRepoListRepository
+import dagger.Subcomponent
+import tonko.com.client.model.interfaces.IRepoRepository
 import tonko.com.client.presenters.RepoListPresenter
 import tonko.com.client.presenters.interfaces.IRepoListPresenter
 import tonko.com.client.view.RepoListActivity
@@ -13,14 +12,10 @@ import tonko.com.client.view.RepoListActivity
 class RepoListModule {
 
     @Provides
-    fun provideRepository(): IRepoListRepository = RepoListRepository()
-
-
-    @Provides
-    fun providePresenter(repository: IRepoListRepository): IRepoListPresenter = RepoListPresenter(repository)
+    fun providePresenter(repository: IRepoRepository): IRepoListPresenter = RepoListPresenter(repository)
 }
 
-@Component(modules = [RepoListModule::class])
+@Subcomponent(modules = [RepoListModule::class])
 interface RepoListComponent {
     fun inject(activity: RepoListActivity)
 }

@@ -16,7 +16,6 @@ import tonko.com.client.USER
 import tonko.com.client.adapters.RepoListAdapter
 import tonko.com.client.adapters.RepoListener
 import tonko.com.client.api.json_responses.Repos
-import tonko.com.client.dagger.DaggerRepoListComponent
 import tonko.com.client.presenters.interfaces.IRepoListPresenter
 import tonko.com.client.view.interfaces.BaseListView
 import javax.inject.Inject
@@ -63,7 +62,7 @@ class RepoListActivity : AppCompatActivity(), RepoListener, BaseListView<Repos> 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_repo_list)
 
-        DaggerRepoListComponent.create().inject(this)
+        App.appComponent.plusRepoListComponent().inject(this)
 
         presenter.attachView(this)
         val sPref = App.appComponent.plusSharedPrefCompoment().getSharedPref()
