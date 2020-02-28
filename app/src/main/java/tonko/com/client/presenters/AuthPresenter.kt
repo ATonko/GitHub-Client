@@ -7,15 +7,14 @@ import tonko.com.client.R
 import tonko.com.client.model.AuthRepository
 import tonko.com.client.presenters.interfaces.IAuthPresenter
 import tonko.com.client.view.interfaces.AuthView
+import javax.inject.Inject
 
-class AuthPresenter : BasePresenter<AuthView>(), IAuthPresenter
-{
+class AuthPresenter @Inject constructor() : BasePresenter<AuthView>(), IAuthPresenter {
     private val repository = AuthRepository()
 
     override fun loginOAuth(id: String,
                             secret: String,
-                            code: String)
-    {
+                            code: String) {
         disposables.add(
                 repository.getAccessToken(id, secret, code)
                         .subscribeOn(Schedulers.io())
@@ -28,8 +27,7 @@ class AuthPresenter : BasePresenter<AuthView>(), IAuthPresenter
         )
     }
 
-    private fun getListWithToken(token: String)
-    {
+    private fun getListWithToken(token: String) {
         disposables.add(
                 repository.getBasicAuth("Bearer $token")
                         .subscribeOn(Schedulers.io())
@@ -45,10 +43,8 @@ class AuthPresenter : BasePresenter<AuthView>(), IAuthPresenter
     override fun basicLogin(
             login: String,
             password: String
-    )
-    {
-        if (isLoginValid(login) && isPasswordValid(password))
-        {
+    ) {
+        if (isLoginValid(login) && isPasswordValid(password)) {
             disposables.add(
                     repository.getBasicAuth(
                             "Basic " +
@@ -64,8 +60,7 @@ class AuthPresenter : BasePresenter<AuthView>(), IAuthPresenter
                             })
             )
 
-        } else
-        {
+        } else {
             view?.isError(R.string.error_not_valid_mail_or_password)
         }
     }

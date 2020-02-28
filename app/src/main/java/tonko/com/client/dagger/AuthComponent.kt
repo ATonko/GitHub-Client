@@ -1,18 +1,17 @@
 package tonko.com.client.dagger
 
+import dagger.Binds
 import dagger.Component
 import dagger.Module
-import dagger.Provides
 import tonko.com.client.presenters.AuthPresenter
 import tonko.com.client.presenters.interfaces.IAuthPresenter
 import tonko.com.client.view.AuthActivity
 
 
 @Module
-class AuthModule {
-    @Provides
-    fun providePresenter(): IAuthPresenter =
-            AuthPresenter()
+abstract class AuthModule {
+    @Binds
+    abstract fun bindsPresenter(impl: AuthPresenter): IAuthPresenter
 }
 
 @Component(modules = [AuthModule::class])
