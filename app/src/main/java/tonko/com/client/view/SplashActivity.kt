@@ -23,11 +23,12 @@ class SplashActivity : Activity() {
         sPref = App.appComponent.plusSharedPrefCompoment().getSharedPref()
 
         Handler().postDelayed({
-            if (sPref.getString(LOGIN, "").isNotEmpty() && sPref.getString(PASSWORD, "").isNotEmpty()) {
-                startActivity(Intent(this, RepoListActivity::class.java))
-            } else {
-                startActivity(Intent(this, AuthActivity::class.java))
-            }
+            val intent = validAuth(sPref.getString(LOGIN, ""), sPref.getString(PASSWORD, ""))
+            startActivity(intent)
         }, 1500)
     }
+
+    private fun validAuth(login: String, password: String): Intent =
+            if (login.isNotEmpty() && password.isNotEmpty()) Intent(this, RepoListActivity::class.java)
+            else Intent(this, AuthActivity::class.java)
 }
